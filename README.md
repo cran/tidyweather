@@ -12,11 +12,19 @@ A tidyverse-style R package for agricultural weather analysis. Effortlessly summ
 
 ## Installation
 
-Currently on [Github](https://github.com/byzheng/tidyweather) only. Install with:
+
+### From CRAN
+
+```r
+install.packages('tidyweather')
+```
+
+### From GitHub (development version)
 
 ```r
 remotes::install_github('byzheng/tidyweather')
 ```
+
 
 ## Configuration
 
@@ -24,19 +32,19 @@ The `tidyweather` package provides a flexible options system to customize defaul
 
 ### Setting Options
 
-Use `weather_options()` to view or modify package settings:
+Use `weather_options$get()` to view or and `weather_options$set()` to modify package settings:
 
 ```r
 library(tidyweather)
 
 # View all current options
-weather_options()
+weather_options$get()
 
 # Set frost threshold to 2°C
-weather_options(extreme.frost_threshold = 2)
+weather_options$set("extreme.frost_threshold" = 2)
 
 # View updated options
-weather_options()
+weather_options$get()
 ```
 
 ### Available Options
@@ -49,7 +57,7 @@ weather_options()
 To restore all options to their defaults:
 
 ```r
-weather_reset()
+weather_options$reset()
 ```
 
 ## Data Sources

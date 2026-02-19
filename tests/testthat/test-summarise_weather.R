@@ -1,6 +1,6 @@
 test_that("summarise_weather works with basic input", {
     # Reset options to ensure clean state
-    weather_reset()
+    weather_options$reset()
     
     # Create test data with known patterns
     test_data <- tibble::tibble(
@@ -23,7 +23,7 @@ test_that("summarise_weather works with basic input", {
 
 test_that("summarise_weather handles no frost scenario", {
     # Reset options to ensure clean state
-    weather_reset()
+    weather_options$reset()
     
     # Test data with no frost (all temperatures above threshold)
     test_data <- tibble::tibble(
@@ -40,8 +40,8 @@ test_that("summarise_weather handles no frost scenario", {
 
 test_that("summarise_weather works with grouped data", {
     # Reset options to ensure clean state
-    weather_reset()
-    weather_options(require_full_year = FALSE)
+    weather_options$reset()
+    weather_options$set(require_full_year = FALSE)
     
     # Create multi-year test data
     test_data <- tibble::tibble(
@@ -65,7 +65,7 @@ test_that("summarise_weather works with grouped data", {
 
 test_that("summarise_weather respects package options", {
     # Reset options
-    weather_reset()
+    weather_options$reset()
     
     # Test data
     test_data <- tibble::tibble(
@@ -79,7 +79,7 @@ test_that("summarise_weather respects package options", {
     expect_equal(result_default$number_frost_days[1], 1)
     
     # Change threshold and test again
-    weather_options(extreme.frost_threshold = 2)
+    weather_options$set(extreme.frost_threshold = 2)
     result_custom <- summarise_weather(test_data)
     expect_equal(result_custom$number_frost_days[1], 101) # Now days 1-100 and day 101 are frost
 })
@@ -126,7 +126,7 @@ test_that("summarise_weather validates input types", {
 
 test_that("summarise_weather works with require_full_year option", {
     # Test with partial year data and require_full_year = TRUE (should fail)
-    weather_reset()
+    weather_options$reset()
     # Default require_full_year might be TRUE
     
     partial_data <- tibble::tibble(
@@ -137,14 +137,14 @@ test_that("summarise_weather works with require_full_year option", {
     
     # This might fail depending on require_full_year default
     # Let's set it explicitly
-    weather_options(require_full_year = TRUE)
+    weather_options$set(require_full_year = TRUE)
     expect_error(
         summarise_weather(partial_data),
         "Data does not contain a full year"
     )
     
     # Should work with require_full_year = FALSE
-    weather_options(require_full_year = FALSE)
+    weather_options$set(require_full_year = FALSE)
     result <- summarise_weather(partial_data)
     expect_s3_class(result, "tbl_df")
     expect_equal(result$number_frost_days[1], 200)
@@ -152,8 +152,8 @@ test_that("summarise_weather works with require_full_year option", {
 
 test_that("summarise_weather handles edge cases", {
     # Reset options
-    weather_reset()
-    weather_options(require_full_year = FALSE)
+    weather_options$reset()
+    weather_options$set(require_full_year = FALSE)
     
     # Test with single day
     single_day <- tibble::tibble(
@@ -180,8 +180,8 @@ test_that("summarise_weather handles edge cases", {
 
 test_that("summarise_weather hemisphere detection works", {
     # Reset options
-    weather_reset()
-    weather_options(require_full_year = FALSE)
+    weather_options$reset()
+    weather_options$set(require_full_year = FALSE)
     
     # Test with southern hemisphere
     south_data <- tibble::tibble(
@@ -209,8 +209,8 @@ test_that("summarise_weather hemisphere detection works", {
 
 test_that("summarise_weather preserves grouping structure", {
     # Reset options
-    weather_reset()
-    weather_options(require_full_year = FALSE)
+    weather_options$reset()
+    weather_options$set(require_full_year = FALSE)
     
     # Create grouped data
     grouped_data <- tibble::tibble(
@@ -233,8 +233,8 @@ test_that("summarise_weather preserves grouping structure", {
 
 test_that("summarise_weather documentation examples work", {
     # Reset options
-    weather_reset()
-    weather_options(require_full_year = FALSE)
+    weather_options$reset()
+    weather_options$set(require_full_year = FALSE)
     
     # Test the basic example from documentation
     # Note: We'll create mock data instead of relying on package data
@@ -260,8 +260,8 @@ test_that("summarise_weather documentation examples work", {
 
 # Clean up after tests
 test_that("cleanup after summarise_weather tests", {
-    weather_reset()
-    expect_equal(weather_options()$extreme$frost_threshold, 0)
+    weather_options$reset()
+    expect_equal(weather_options$get("extreme.frost_threshold"), 0)
 })
 
 
@@ -272,7 +272,7 @@ test_that("Weather records integration test", {
     expect_true(file.exists(file))
 
     records <- read_weather(file)
-    weather_reset()
+    weather_options$reset()
     # Test with 2024 data
     result <- records |>
         dplyr::filter(year == 2024) |>
@@ -286,7 +286,7 @@ test_that("Weather records integration test", {
             dplyr::group_by(year) |> 
             summarise_weather()
     })
-    weather_options(require_full_year = FALSE)
+    weather_options$set(require_full_year = FALSE)
     
     result <- records |>
         dplyr::group_by(year) |> 

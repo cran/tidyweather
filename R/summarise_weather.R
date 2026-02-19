@@ -17,10 +17,10 @@
 #'
 #' @details
 #' The function retrieves thresholds and settings from the global tidyweather
-#' options via `weather_options()`. The default frost threshold is
-#' `get_weather_option("extreme.frost_threshold")` and `require_full_year` is
-#' `get_weather_option("require_full_year")`. These can be changed using
-#' `weather_options()`.
+#' options via `weather_options$get()`. The default frost threshold is
+#' `weather_options$get("extreme.frost_threshold")` and `require_full_year` is
+#' `weather_options$get("require_full_year")`. These can be changed using
+#' `weather_options$set()`.
 #'
 #' This function is designed to work with grouped tibbles (e.g., after
 #' `dplyr::group_by()`), applying the summary per group.
@@ -32,7 +32,7 @@
 #' weather_data <- read_weather(system.file("extdata/ppd_72150.met", package = "tidyweather"))
 #'
 #' # Summarise without grouping
-#' weather_options(require_full_year = FALSE)
+#' weather_options$set("require_full_year" = FALSE)
 #' summarise_weather(weather_data)
 #'
 #' # Summarise by group (e.g., year)
@@ -42,7 +42,7 @@
 #' @export
 summarise_weather <- function(.data) {
     stopifnot(tibble::is_tibble(.data) || is.data.frame(.data))
-    require_full_year <- get_weather_option("require_full_year")
+    require_full_year <- weather_options$get("require_full_year")
     .data |>
         dplyr::group_modify(~ {
             df <- .x

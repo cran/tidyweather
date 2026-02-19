@@ -1,8 +1,8 @@
 Package: tidyweather
 Title: Analysis the Weather Data for Agriculture
-Version: 0.1.0
+Version: 0.2.0
 Authors@R: 
-    person("Bangou", "Zheng", , "bangyou.zheng@csiro.au", role = c("aut", "cre"))
+    person("Bangou", "Zheng", , "zheng.bangyou@gmail.com", role = c("aut", "cre"))
 Description: Functions are collected to analyse weather data for agriculture 
     purposes including to read weather records in multiple formats, 
     calculate extreme climate index. Demonstration data are included the
@@ -11,15 +11,15 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 RoxygenNote: 7.3.3
 Depends: R (>= 4.1.0)
-Imports: stringr, tibble, dplyr, settings
+Imports: stringr, tibble, dplyr, optree
 Suggests: testthat (>= 3.0.0)
 Config/testthat/edition: 3
 URL: https://tidyweather.bangyou.me/,
         https://github.com/byzheng/tidyweather
 BugReports: https://github.com/byzheng/tidyweather/issues
 NeedsCompilation: no
-Packaged: 2026-01-12 04:13:13 UTC; zhe00a
+Packaged: 2026-02-18 01:46:04 UTC; zhe00a
 Author: Bangou Zheng [aut, cre]
-Maintainer: Bangou Zheng <bangyou.zheng@csiro.au>
+Maintainer: Bangou Zheng <zheng.bangyou@gmail.com>
 Repository: CRAN
-Date/Publication: 2026-01-17 11:20:02 UTC
+Date/Publication: 2026-02-19 08:30:01 UTC

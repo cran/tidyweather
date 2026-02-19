@@ -159,7 +159,9 @@ check_date_continuity <- function(dates) {
     
     gap_info <- data.frame(
         gap_start = dates[gaps],
+        gap_start_doy = format(dates[gaps], "%j"),
         gap_end = dates[gaps + 1],
+        gap_end_doy = format(dates[gaps + 1], "%j"),
         days_missing = date_diffs[gaps] - 1
     )
     
