@@ -3,15 +3,19 @@
 export(check_weather)
 export(day_length)
 export(interpolate_3hr)
+export(interpolate_hourly_sin_pp_adjusted)
 export(interpolation_function)
 export(last_frost_day)
 export(number_frost_day)
 export(read_weather)
+export(spherical_distance)
 export(summarise_weather)
 export(thermal_time)
 export(ttest_ts)
 export(weather_options)
 export(write_weather)
-importFrom(optree,create_options_manager)
-importFrom(optree,v_logical_scalar)
-importFrom(optree,v_numeric_range)
+importFrom(optree,
+  create_options_manager,
+  v_logical_scalar,
+  v_numeric_range
+)
