@@ -27,7 +27,7 @@ test_that("Thermal time", {
         x_temp,
         y_temp,
         method = "HourlySinPpAdjusted",
-        lat = records$latitude[1],
+        latitude = records$latitude[1],
         date = records$date
     )
     expect_equal(length(res), length(records$mint))
@@ -43,14 +43,14 @@ test_that("thermal_time HourlySinPpAdjusted matches mean hourly response", {
     y_temp <- c(-50, 60)
     date <- as.Date(c("2020-01-01", "2020-01-02", "2020-01-03"))
 
-    expected <- interpolate_hourly_sin_pp_adjusted(mint, maxt, lat = -27.5, date = date)
+    expected <- interpolate_hourly_sin_pp_adjusted(mint, maxt, latitude = -27.5, date = date)
     result <- thermal_time(
         mint,
         maxt,
         x_temp,
         y_temp,
         method = "HourlySinPpAdjusted",
-        lat = -27.5,
+        latitude = -27.5,
         date = date
     )
 
@@ -61,7 +61,7 @@ test_that("interpolate_hourly_sin_pp_adjusted returns daily means", {
     mint <- c(0, 10, 5)
     maxt <- c(30, 40, 35)
     date <- as.Date(c("2020-01-01", "2020-01-02", "2020-01-03"))
-    result <- interpolate_hourly_sin_pp_adjusted(mint, maxt, lat = -27.5, date = date)
+    result <- interpolate_hourly_sin_pp_adjusted(mint, maxt, latitude = -27.5, date = date)
 
     expect_type(result, "double")
     expect_equal(length(result), 3)
@@ -71,7 +71,7 @@ test_that("interpolate_hourly_sin_pp_adjusted handles APSIM boundaries", {
     mint <- c(10, 10, 10)
     maxt <- c(30, 30, 30)
     date <- as.Date(c("2020-01-01", "2020-01-01", "2020-01-01"))
-    result <- interpolate_hourly_sin_pp_adjusted(mint, maxt, lat = -27.5, date = date)
+    result <- interpolate_hourly_sin_pp_adjusted(mint, maxt, latitude = -27.5, date = date)
 
     expect_equal(result[1], result[2], tolerance = 1e-8)
     expect_equal(result[2], result[3], tolerance = 1e-8)
@@ -81,24 +81,24 @@ test_that("interpolate_hourly_sin_pp_adjusted returns hourly matrix when hourly 
     mint <- c(0, 10, 5)
     maxt <- c(30, 40, 35)
     date <- as.Date(c("2020-01-01", "2020-01-02", "2020-01-03"))
-    hourly <- interpolate_hourly_sin_pp_adjusted(mint, maxt, date = date, lat = -27.5, hourly = TRUE)
-    daily <- interpolate_hourly_sin_pp_adjusted(mint, maxt, date = date, lat = -27.5)
+    hourly <- interpolate_hourly_sin_pp_adjusted(mint, maxt, date = date, latitude = -27.5, hourly = TRUE)
+    daily <- interpolate_hourly_sin_pp_adjusted(mint, maxt, date = date, latitude = -27.5)
     expect_true(is.data.frame(hourly))
     expect_equal(dim(hourly), c(72, 6))
     expect_equal(round(daily, 1), c(16.7, 24.1, 20.1))
 })
 
-test_that("interpolate_hourly_sin_pp_adjusted requires scalar lat", {
+test_that("interpolate_hourly_sin_pp_adjusted requires scalar latitude", {
     mint <- c(0, 10)
     maxt <- c(30, 40)
     date <- as.Date(c("2020-01-01", "2020-01-02"))
-    expect_error(interpolate_hourly_sin_pp_adjusted(mint, maxt, date = date, lat = c(-27.5, -28)))
-    expect_error(interpolate_hourly_sin_pp_adjusted(mint, maxt, date = date, lat = "not numeric"))
-    expect_error(interpolate_hourly_sin_pp_adjusted(mint, maxt, date = date, lat = -27.4, hourly = "not logical"))
-    expect_error(interpolate_hourly_sin_pp_adjusted(c(10), maxt, date = date, lat = c(-27.5, -28)))
-    expect_error(interpolate_hourly_sin_pp_adjusted(c(10, NA), maxt, date = date, lat = c(-27.5, -28)))
-    expect_error(interpolate_hourly_sin_pp_adjusted(c(10, 50), maxt, date = date, lat = c(-27.5, -28)))
-    expect_error(interpolate_hourly_sin_pp_adjusted(c(10, 10, 10, 10), maxt, date = date, lat = c(-27.5, -28)))
+    expect_error(interpolate_hourly_sin_pp_adjusted(mint, maxt, date = date, latitude = c(-27.5, -28)))
+    expect_error(interpolate_hourly_sin_pp_adjusted(mint, maxt, date = date, latitude = "not numeric"))
+    expect_error(interpolate_hourly_sin_pp_adjusted(mint, maxt, date = date, latitude = -27.4, hourly = "not logical"))
+    expect_error(interpolate_hourly_sin_pp_adjusted(c(10), maxt, date = date, latitude = c(-27.5, -28)))
+    expect_error(interpolate_hourly_sin_pp_adjusted(c(10, NA), maxt, date = date, latitude = c(-27.5, -28)))
+    expect_error(interpolate_hourly_sin_pp_adjusted(c(10, 50), maxt, date = date, latitude = c(-27.5, -28)))
+    expect_error(interpolate_hourly_sin_pp_adjusted(c(10, 10, 10, 10), maxt, date = date, latitude = c(-27.5, -28)))
 })
 
 test_that("thermal_time rejects NA values", {

@@ -22,7 +22,7 @@ The APSIM HourlySinPpAdjusted method can be selected with
 method = 'HourlySinPpAdjusted'.}
 
 \item{...}{Additional arguments passed to the method-specific functions.
-Required arguments for method = 'HourlySinPpAdjusted' are, lat and date.}
+Required arguments for method = 'HourlySinPpAdjusted' are, latitude and date.}
 }
 \value{
 The thermal time.
@@ -39,5 +39,5 @@ thermal_time(mint, maxt, x_temp, y_temp)
 thermal_time(mint, maxt, x_temp, y_temp, method = '3hr')
 date <- as.Date(c("2020-01-01", "2020-01-02"))
 thermal_time(mint, maxt, x_temp, y_temp, method = 'HourlySinPpAdjusted',
-             lat = -27.5, date = date)
+             latitude = -27.5, date = date)
 }

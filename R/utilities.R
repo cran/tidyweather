@@ -54,12 +54,12 @@ ttest_ts <- function(y, slope = NULL) {
 #' The time elapsed in hours between the specified sun angle 
 #' from 90 degree in am and pm. +ve above the horizon, -ve below the horizon.
 #' @param  doy day of year number    
-#' @param lat latitude of site (deg) 
+#' @param latitude latitude of site (deg) 
 #' @param  angle angle to measure time between, such as twilight (deg).
 #' angular distance between 90 deg and end of twilight - altitude of sun. +ve up, -ve down.
 #' @return day length in hours
 #' @export
-day_length <- function( doy, lat, angle = -6 ) {
+day_length <- function( doy, latitude = NULL, angle = -6 ) {
     # Constant Values
     aeqnox <- 82.25
     dg2rdn <- ( 2.0 * pi ) / 360.0
@@ -71,13 +71,13 @@ day_length <- function( doy, lat, angle = -6 ) {
     dec <- decsol * sin( dy2rdn * ( doy - aeqnox ) )
     
     
-    if ( ( abs( lat ) == 90.0 ) )
+    if ( ( abs( latitude ) == 90.0 ) )
     {
-        coshra <- rep( sign_apsim( 1.0, -dec) * sign_apsim( 1.0, lat ), 
+        coshra <- rep( sign_apsim( 1.0, -dec) * sign_apsim( 1.0, latitude ), 
                 times = length( doy ) )
     } else 
     {
-        latrn <- lat * dg2rdn
+        latrn <- latitude * dg2rdn
         slsd <- sin( latrn ) * sin( dec )
         clcd <- cos( latrn ) * cos( dec )
         

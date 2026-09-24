@@ -10,7 +10,7 @@
 #' The APSIM HourlySinPpAdjusted method can be selected with
 #' method = 'HourlySinPpAdjusted'.
 #' @param ... Additional arguments passed to the method-specific functions.
-#'   Required arguments for method = 'HourlySinPpAdjusted' are, lat and date.
+#'   Required arguments for method = 'HourlySinPpAdjusted' are, latitude and date.
 #' @return The thermal time.
 #' @export
 #' @examples 
@@ -22,7 +22,7 @@
 #' thermal_time(mint, maxt, x_temp, y_temp, method = '3hr')
 #' date <- as.Date(c("2020-01-01", "2020-01-02"))
 #' thermal_time(mint, maxt, x_temp, y_temp, method = 'HourlySinPpAdjusted',
-#'              lat = -27.5, date = date)
+#'              latitude = -27.5, date = date)
 thermal_time <- function(mint, maxt, x_temp, y_temp,
                          method = NULL, ...)
 {
@@ -60,11 +60,15 @@ thermal_time <- function(mint, maxt, x_temp, y_temp,
         return(res)
     } else if (method == "HourlySinPpAdjusted") {
         args <- list(...)
-        if (is.null(args$lat) || is.null(args$date)) {
-            stop("lat and date are required when method = 'HourlySinPpAdjusted'.")
+        latitude <- args[["latitude"]]
+        if (is.null(latitude)) {
+            latitude <- args[["lat"]]
+        }
+        if (is.null(latitude) || is.null(args[["date"]])) {
+            stop("latitude and date are required when method = 'HourlySinPpAdjusted'.")
         }
         temp <- interpolate_hourly_sin_pp_adjusted(mint = mint, maxt = maxt,
-                                                    lat = args$lat, date = args$date)
+                                                    latitude = latitude, date = args[["date"]])
         return(interpolation_function(x = x_temp, y = y_temp, values = temp))
     } else {
         stop("Not implemented for method ", method)
@@ -77,13 +81,13 @@ thermal_time <- function(mint, maxt, x_temp, y_temp,
 #' Interpolates hourly temperatures from daily minimum and maximum temperatures
 #' using the APSIM HourlySinPpAdjusted method. Daytime temperatures are
 #' sinusoidal and nighttime temperatures follow an exponential cooling curve.
-#' Day length, sunrise and sunset are calculated from \code{lat} and \code{date}.
+#' Day length, sunrise and sunset are calculated from \code{latitude} and \code{date}.
 #'
 #' @param mint A numeric vector of daily minimum temperatures.
 #' @param maxt A numeric vector of daily maximum temperatures.
 #' @param date A \code{Date} vector with the same length as \code{mint}, used to
 #'   determine the day of year for day length calculations.
-#' @param lat Latitude of the site (deg) as a single numeric value.
+#' @param latitude Latitude of the site (deg) as a single numeric value.
 #' @param hourly A logical value indicating whether to return hourly temperatures. If \code{FALSE}, daily mean temperatures are returned.
 #'
 #' @return A numeric vector of daily mean temperatures, with one value per
@@ -94,9 +98,15 @@ thermal_time <- function(mint, maxt, x_temp, y_temp,
 #' mint <- c(10, 11, 12)
 #' maxt <- c(30, 31, 32)
 #' date <- as.Date(c("2020-01-01", "2020-01-02", "2020-01-03"))
-#' interpolate_hourly_sin_pp_adjusted(mint, maxt, date = date, lat = -27.5)
+#' interpolate_hourly_sin_pp_adjusted(mint, maxt, date = date, latitude = -27.5)
 #' 
-#' hourly <- interpolate_hourly_sin_pp_adjusted(mint, maxt, date = date, lat = -27.5, hourly = TRUE)
+#' hourly <- interpolate_hourly_sin_pp_adjusted(
+#'     mint, 
+#'     maxt, 
+#'     date = date, 
+#'     latitude = -27.5, 
+#'     hourly = TRUE
+#' )
 #' library(ggplot2)
 #' hourly |>
 #'     ggplot(aes(x = timestamp, y = temp)) +
@@ -104,30 +114,34 @@ thermal_time <- function(mint, maxt, x_temp, y_temp,
 #'     geom_point(aes(x = timestamp, y = mint), color = "blue") +
 #'     geom_point(aes(x = timestamp, y = maxt), color = "red") +
 #'     theme_bw() +
-#'     labs(x = "Date Time", y = "Temperature (°C)", title = "Hourly Temperature Interpolation")
+#'     labs(
+#'         x = "Date Time", 
+#'         y = "Temperature (°C)", 
+#'         title = "Hourly Temperature Interpolation"
+#'     )
 #'
 #' @export
 interpolate_hourly_sin_pp_adjusted <- function(
     mint,
     maxt,
     date,
-    lat,
+    latitude = NULL,
     hourly = FALSE
 ) {
     stopifnot(is.numeric(mint), is.numeric(maxt), length(mint) == length(maxt))
     stopifnot(sum(is.na(mint)) == 0, sum(is.na(maxt)) == 0)
     stopifnot(all(mint <= maxt))
-    stopifnot(is.numeric(lat), length(lat) == 1)
+    stopifnot(!is.null(latitude), is.numeric(latitude), length(latitude) == 1)
     stopifnot(is.logical(hourly), length(hourly) == 1)
     
     nday <- length(mint)
     stopifnot(inherits(date, "Date"), length(date) == nday)
     stopifnot(sum(is.na(date)) == 0)
 
-    lat <- rep(lat, nday)
+    latitude <- rep(latitude, nday)
 
     doy <- as.numeric(format(date, "%j"))
-    daylength <- mapply(day_length, doy, lat)
+    daylength <- mapply(day_length, doy, latitude)
     sunrise <- 12 - daylength / 2
     sunset <- sunrise + daylength
 
