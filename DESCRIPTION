@@ -1,6 +1,6 @@
 Package: tidyweather
 Title: Analysis the Weather Data for Agriculture
-Version: 0.3.2
+Version: 0.3.3
 Authors@R: 
     person("Bangou", "Zheng", , "zheng.bangyou@gmail.com", role = c("aut", "cre"))
 Description: Functions are collected to analyse weather data for agriculture 
@@ -16,10 +16,10 @@ Config/testthat/edition: 3
 URL: https://tidyweather.bangyou.me/,
         https://github.com/byzheng/tidyweather
 BugReports: https://github.com/byzheng/tidyweather/issues
-Config/roxygen2/version: 8.1.0
+Config/roxygen2/version: 8.1.1
 NeedsCompilation: no
-Packaged: 2026-09-24 10:10:26 UTC; zhe00a
+Packaged: 2026-10-16 02:35:13 UTC; zhe00a
 Author: Bangou Zheng [aut, cre]
 Maintainer: Bangou Zheng <zheng.bangyou@gmail.com>
 Repository: CRAN
-Date/Publication: 2026-09-24 11:30:02 UTC
+Date/Publication: 2026-10-16 03:30:12 UTC

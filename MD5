@@ -1,6 +1,6 @@
-5d0acbcfdd3af1f434f58c69e9d50158 *DESCRIPTION
+0ff56302fada0abd698703c4db5d6948 *DESCRIPTION
 2ea7e07e4f644b46e477865f0f28b759 *LICENSE
-a3bbe3a91c5bb975a3d4875a734c8d68 *NAMESPACE
+28cde544099bb2eb4199a555930fbf52 *NAMESPACE
 ce4d66dd1dffa0965dfbbb85a2fe572a *R/check_weather.R
 28bca3df3b036723d6ca685515062edd *R/last_frost_day.R
 5f271b85e691ff446f06e1886d561ce8 *R/number_frost_day.R
@@ -10,6 +10,7 @@ bc9c843b8c05d9e53b35d8414c13552d *R/read_weather.R
 ea918b7e3583c15bcc39b72906bd66ae *R/summarise_weather.R
 0211a98f16a0f8834ea35d9f6859cae3 *R/thermal_time.R
 e2f6e84cc301e54d60d080f700f0bea4 *R/utilities.R
+c5f7a55bc47606c1bee256d1b3476fae *R/wang_engel_tt.R
 cd55dc759203106cf3c12c1964275306 *R/write_weather.R
 2f3b46d5d9f28d83a15aad598daac032 *README.md
 11fbd924c4632f817f689e403ff0eff0 *inst/extdata/README_extdata.txt
@@ -32,6 +33,7 @@ afc7d798530a1be8775dc975df520495 *man/read_weather.Rd
 539c18a117eaa12e31d11c9820fed4f9 *man/summarise_weather.Rd
 9e48985bbb64187e283c9f4d6857f987 *man/thermal_time.Rd
 9ce3e5b181f57aa8fd3291a6b6b076e6 *man/ttest_ts.Rd
+20807d7fbac5d8703694637ff17e4dfd *man/wang_engel_tt.Rd
 bf63ffb1153f5604d0ab23c5e59d2c05 *man/weather_options.Rd
 124cce41d2cc9087e6d0cbe32c8a7b23 *man/write_weather.Rd
 31945fb9f0bde6386125eea3abb20855 *tests/testthat.R
@@ -43,4 +45,5 @@ d44ec5a0f50fa8fe32a258d2ba753f99 *tests/testthat/test-read_weather.R
 b08a068e7c248b52edfea8c81bb70621 *tests/testthat/test-spherical_distance.R
 fbb8d4b3630043b8f4f8c95552a79175 *tests/testthat/test-summarise_weather.R
 3073278d098e66e9c4f9429b66c36c73 *tests/testthat/test-thermal_time.R
+fb5ba0811e65b4aa15fb29e0bcb9f334 *tests/testthat/test-wang_engel_tt.R
 b9e5170c972d82da0a2d12c01922ced3 *tests/testthat/test-write_weather.R

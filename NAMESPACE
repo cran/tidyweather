@@ -12,6 +12,7 @@ export(spherical_distance)
 export(summarise_weather)
 export(thermal_time)
 export(ttest_ts)
+export(wang_engel_tt)
 export(weather_options)
 export(write_weather)
 importFrom(optree,
